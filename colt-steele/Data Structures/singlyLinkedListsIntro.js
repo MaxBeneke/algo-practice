@@ -51,10 +51,39 @@ class SinglyLinkedList{
         if (!this.head){
             this.head = newNode;
             this.tail = this.head;
-        } 
-        newNode.next = this.head;
-        this.head = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
         this.length++;
         return this;
+    }
+    get(index) {
+        if (index < 0 || index >= this.length) return null;
+        let current = this.head;
+        for (let i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current;
+    }
+    set(index, val) {
+        let target = this.get(index);
+        if (target) {
+            target.val = val;
+            return true;
+        }
+        return false;
+    }
+    insert(index, val) {
+        if (index < 0 || index > this.length) return false;
+        if (index === 0) return !!this.unshift(val);
+        if (index === this.length) return !!this.push(val);
+
+        let newNode = new Node(val)
+        let pre = this.get(index-1)
+        newNode.next = pre.next;
+        pre.next = newNode;
+        this.length++;
+        return true;
     }
 }
