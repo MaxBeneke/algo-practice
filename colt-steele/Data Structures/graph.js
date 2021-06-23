@@ -38,19 +38,38 @@ class Graph {
 
         return result;
     }
-    DFSIterative(start) {
-        let S = [];
+    // DFSIterative(start) {
+    //     let S = [];
+    //     const result = [];
+    //     const visited = {};
+    //     S.push(start);
+    //     result.push(start)
+    //     while (S.length > 0) {
+    //         let vertex = S.pop();
+    //         if (!visited[vertex]) {
+    //             visited[vertex] = true;
+    //             result.push(vertex);
+    //             S.push(...this.adjacencyList[vertex])
+    //         }
+    //     }
+    // }
+    DFIterative(start) {
+        const stack = [start];
         const result = [];
         const visited = {};
-        S.push(start);
-        result.push(start)
-        while (S.length > 0) {
-            let vertex = S.pop();
-            if (!visited[vertex]) {
-                visited[vertex] = true;
-                result.push(vertex);
-                S.push(...this.adjacencyList[vertex])
-            }
+        let currentVertex;
+        
+        visited[start] = true;
+        while(stack.length) {
+            currentVertex = stack.pop();
+            result.push(currentVertex);
+
+            this.adjacencyList[currentVertex].forEach(neighbor => {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    stack.push(neighbor);
+                }
+            })
         }
     }
 }
