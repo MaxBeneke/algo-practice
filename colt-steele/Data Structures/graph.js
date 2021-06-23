@@ -38,4 +38,19 @@ class Graph {
 
         return result;
     }
+    DFSIterative(start) {
+        let S = [];
+        const result = [];
+        const visited = {};
+        S.push(start);
+        result.push(start)
+        while (S.length > 0) {
+            let vertex = S.pop();
+            if (!visited[vertex]) {
+                visited[vertex] = true;
+                result.push(vertex);
+                S.push(...this.adjacencyList[vertex])
+            }
+        }
+    }
 }
