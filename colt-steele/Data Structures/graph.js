@@ -38,21 +38,7 @@ class Graph {
 
         return result;
     }
-    // DFSIterative(start) {
-    //     let S = [];
-    //     const result = [];
-    //     const visited = {};
-    //     S.push(start);
-    //     result.push(start)
-    //     while (S.length > 0) {
-    //         let vertex = S.pop();
-    //         if (!visited[vertex]) {
-    //             visited[vertex] = true;
-    //             result.push(vertex);
-    //             S.push(...this.adjacencyList[vertex])
-    //         }
-    //     }
-    // }
+   
     DFIterative(start) {
         const stack = [start];
         const result = [];
@@ -71,5 +57,25 @@ class Graph {
                 }
             })
         }
+    }
+
+    BFTraversal(start) {
+        const queue = [start];
+        const result = [];
+        const visited = {};
+        let vertex;
+
+        visited[start] = true;
+        while(queue.length) {
+            vertex = queue.shift();
+            result.push(vertex);
+            this.adjacencyList[vertex].forEach(neighbor => {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.push(neighbor);
+                }
+            })
+        }
+        return result;
     }
 }
