@@ -9,6 +9,26 @@ class WeightedGraph {
         this.adjacencyList[vertex1].push({node: vertex2, weight});
         this.adjacencyList[vertex2].push({node: vertex1, weight});
     }
+    // dijkstra(start, end) {
+    //     let distanceArr = this.adjacencyList.keys();
+    //     let distances = {};
+    //     distanceArr.forEach(obj => obj === start ? distances[obj] = 0 : distances[obj] = Infinity)
+    //     let queue = new SimplePriorityQueue();
+    //     distanceArr.forEach(obj => {
+    //        if (obj !== start) queue.enqueue(obj.node, obj.weight)
+    //     })
+    //     let previous = {};
+    //     distanceArr.forEach(obj => previous[obj] = null)
+
+    //     while(queue.length) {
+    //         let node = queue.dequeue();
+    //         if (node === end) break;
+    //         this.adjacencyList[node].forEach(obj => {
+
+    //         })
+    //     }
+    // }
+    
 }
 
 class SimplePriorityQueue {
