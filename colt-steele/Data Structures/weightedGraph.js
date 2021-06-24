@@ -9,27 +9,8 @@ class WeightedGraph {
         this.adjacencyList[vertex1].push({node: vertex2, weight});
         this.adjacencyList[vertex2].push({node: vertex1, weight});
     }
-    // dijkstra(start, end) {
-    //     let distanceArr = this.adjacencyList.keys();
-    //     let distances = {};
-    //     distanceArr.forEach(obj => obj === start ? distances[obj] = 0 : distances[obj] = Infinity)
-    //     let queue = new SimplePriorityQueue();
-    //     distanceArr.forEach(obj => {
-    //        if (obj !== start) queue.enqueue(obj.node, obj.weight)
-    //     })
-    //     let previous = {};
-    //     distanceArr.forEach(obj => previous[obj] = null)
-
-    //     while(queue.length) {
-    //         let node = queue.dequeue();
-    //         if (node === end) break;
-    //         this.adjacencyList[node].forEach(obj => {
-
-    //         })
-    //     }
-    // }
     Dijkstra(start, finish) {
-        const nodes = new SimplePriorityQueue();
+        const nodes = new PriorityQueue();
         const distances = {};
         const previous = {};
         let path = []; // to return at end
@@ -76,18 +57,73 @@ class WeightedGraph {
     }
 }
 
-class SimplePriorityQueue {
-    constructor(){
+class Node {
+    constructor(val, priority) {
+        this.val = val;
+        this.priority = priority
+    }
+}
+
+class PriorityQueue {
+    constructor() {
         this.values = [];
     }
     enqueue(val, priority) {
-        this.values.push({val, priority});
-        this.sort();
+        let newNode = new Node(val, priority);
+        this.values.push(newNode);
+        this.bubbleUp();
+    }
+    bubbleUp() {
+        let idx = this.values.length - 1;
+        const element = this.values[idx];
+        while (idx > 0) {
+            let parentIdx = Math.floor((idx - 1)/2);
+            let parent = this.values[parentIdx];
+            if(element.priority >= parent.priority) break;
+            this.values[parentIdx] = element;
+            this.values[idx] = parent;
+            idx = parentIdx;
+        }
     }
     dequeue() {
-        return this.values.shift();
+        let min = this.values[0];
+        let end = this.values.pop();
+        if (this.values.length > 0) {
+            this.values[0] = end;
+            this.sinkDown();
+        }
+        return min;
     }
-    sort() {
-        this.values.sort((a, b) => a.priority - b.priority);
+    sinkDown() {
+        let idx = 0;
+        const length = this.values.length
+        const element = this.values[0];
+        while(true) {
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let leftChild, rightChild;
+            let swap = null;
+
+            if (leftChildIdx < length) {
+                leftChild = this.values[leftChildIdx]
+                if(leftChild.priority < element.priority) {
+                    swap = leftChildIdx;
+                }
+            }
+            if (rightChildIdx < length) {
+                rightChild = this.values[rightChildIdx]
+                if(
+                (!swap && rightChild.priority < element.priority) || 
+                (swap && rightChild.priority < leftChild.priority)
+                )
+                {
+                    swap = rightChildIdx;
+                }
+            }
+            if (!swap) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
+        }
     }
 }
