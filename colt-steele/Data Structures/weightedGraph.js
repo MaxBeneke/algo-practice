@@ -6,9 +6,10 @@ class WeightedGraph {
         if(!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
     }
     addEdge(vertex1, vertex2, weight) {
-        this.adjacencyList[vertex1].push({node: vertex2, weight});
-        this.adjacencyList[vertex2].push({node: vertex1, weight});
+        this.adjacencyList[vertex1].push({node: vertex2, weight: weight});
+        this.adjacencyList[vertex2].push({node: vertex1, weight: weight});
     }
+
     Dijkstra(start, finish) {
         const nodes = new PriorityQueue();
         const distances = {};
@@ -35,20 +36,21 @@ class WeightedGraph {
                 }
                 break;
             }
+
             if(smallest || distances[smallest] !== Infinity) {
                for(let neighbor in this.adjacencyList[smallest]) {
                    //find neighboring node
                    let nextNode = this.adjacencyList[smallest][neighbor];
                    //calculate new distance to neighboring node
                    let candidate = distances[smallest] + nextNode.weight;
-                   let nextNeighbor = nextNode.node
-                   if (candidate < distances[nextNeighbor]) {
+                   let neighborValue = nextNode.node
+                   if (candidate < distances[neighborValue]) {
                        //updating new smallest distance to neighbor
-                       distances[nextNeighbor] = candidate;
+                       distances[neighborValue] = candidate;
                        //updating previous - How we got to neighbor
-                       previous[nextNeighbor] = smallest;
+                       previous[neighborValue] = smallest;
                        //enqueue PQ with new priority;
-                       nodes.enqueue(nextNeighbor, candidate);
+                       nodes.enqueue(neighborValue, candidate);
                    }
                }
             }
