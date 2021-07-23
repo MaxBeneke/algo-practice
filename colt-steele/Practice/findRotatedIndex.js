@@ -22,6 +22,7 @@ function findRotatedIndex(arr, num){
     } else {
         right = pivot;
     }
+    
     while (left < right) {
         let mid = Math.floor((left+right)/2)
         if (num === arr[mid]) {
