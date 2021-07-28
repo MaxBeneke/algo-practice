@@ -1,34 +1,22 @@
 var removeDuplicates = function(s, k) {
-    let altered = false
+    const stack = [];
     
-    const onePass = (string, num) => {
-        let stack = [];
-        let count = 0;
-        altered = false;
-    
-        for (let i = 0; i < string.length; i++) {
-            stack.push(string[i]);
-            count++;
- 
-            if (string[i] !== string[i-1]) {
-                count = 1;
+    for(let char of s) {
+        if(stack.length && stack[stack.length-1][0] === char) {
+            stack[stack.length-1][1] += 1;
+            if(stack[stack.length-1][1] === k) {
+                stack.pop();
             }
-            if (count === num) {
-                altered = true;
-                while (count >= 1) {
-                    stack.pop();
-                    count--;
-                }
-            }
+        } else {
+            stack.push([char, 1]);
         }
-    return stack.join('')
     }
     
-    let current = onePass(s, k)
-    while(altered === true) {
-        current = onePass(current, k);
+    let res = '';
+    
+    for(let [char, count] of stack) {
+        res += char.repeat(count);
     }
-    return current;
+    
+    return res;
 };
-
-console.log(removeDuplicates('aabaabcd', 2))
