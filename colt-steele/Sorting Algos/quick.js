@@ -22,28 +22,27 @@ function oldPivot(arr, start = 0, end = arr.length + 1) {
 // Solution for Pivot
 
 function pivot(arr, start=0, end=arr.length+1) {
-    let pivot = arr[start];
-    let swapIdx = start;
-
     const swap = (arr, idx1, idx2) => {
-       [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+        [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
     }
+    let pivotVal = arr[start];
+    let pivotIdx = start;
 
     for (let i = start + 1; i < arr.length; i++) {
-        if (pivot > arr[i]){
-            swapIdx++;
-            swap(arr, swapIdx, i)
+        if (pivotVal > arr[i]) {
+            pivotIdx++;
+            swap(arr, pivotIdx, i)
         }
     }
-    swap(arr, start, swapIdx)
-    return swapIdx;
+    swap(arr, start, pivotIdx);
+    return pivotIdx;
 }
 
 function quickSort(arr, left=0, right = arr.length - 1){
     if (left < right) {
-        let pivotIndex = pivot(arr, left, right)
-        quickSort(arr, left, pivotIndex-1)
-        quickSort(arr, pivotIndex+1, right)
+        let pivotIdx = pivot(arr, left, right)
+        quickSort(arr, left, pivotIdx - 1);
+        quickSort(arr, pivotIdx + 1, right);
     }
     return arr;
 }
