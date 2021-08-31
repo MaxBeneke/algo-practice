@@ -30,4 +30,4 @@ function hasEnoughLetters(note, newspaper) {
     }
     return true;
 
-}
+};
