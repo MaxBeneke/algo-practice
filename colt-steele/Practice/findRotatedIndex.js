@@ -2,12 +2,12 @@
 
 
 
-function findRotatedIndex(arr, num){
+function findRotatedIndex(nums, target){
     let left = 0;
-    let right = arr.length - 1;
+    let right = nums.length - 1;
     while (left < right) {
         let mid = Math.floor((left + right) / 2)
-        if (arr[mid] > right) {
+        if (nums[mid] > right) {
             left = mid + 1;
         } else {
             right = mid;
@@ -15,9 +15,9 @@ function findRotatedIndex(arr, num){
     }
     let pivot = left;
     left = 0;
-    right = arr.length - 1;
+    right = nums.length - 1;
     
-    if (arr[pivot] <= num && num <= arr[right]) {
+    if (nums[pivot] <= target && target <= nums[right]) {
         left = pivot;
     } else {
         right = pivot;
@@ -25,12 +25,12 @@ function findRotatedIndex(arr, num){
     
     while (left < right) {
         let mid = Math.floor((left+right)/2)
-        if (num === arr[mid]) {
+        if (target === nums[mid]) {
             return mid;
         }
-        if (arr[mid] > num) {
+        if (nums[mid] > target) {
             right = mid - 1;
-        } else if (arr[mid] < num) {
+        } else if (nums[mid] < target) {
             left = mid + 1;
         }
     }
